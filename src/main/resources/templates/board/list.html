@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>seq</th>
+                    <th>title</th>
+                    <th>email</th>
+                    <th>nickname</th>
+                    <th>createAt</th>
+                    <th>replyCount</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr th:each="dto : ${result.dtoList}">
+                    <th>[[${dto.seq}]]</th>
+                    <th>[[${dto.title}]]</th>
+                    <th>[[${dto.email}]]</th>
+                    <th>[[${dto.nickname}]]</th>
+                    <th>[[${#temporals.format(dto.createAt, 'yyyy/MM/dd')}]]</th>
+                    <th>[[${dto.replyCount}]]</th>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination">
+                <li th:each="pageNumber : ${result.pageList}" class="page-item">
+                    <a th:class=" 'page-link ' + ${result.currentPage == pageNumber ? 'active' : ''} "
+                       th:href="@{/board/list(page = ${pageNumber})}">
+                        [[${pageNumber}]]
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </th:block>
+
+</th:block>
